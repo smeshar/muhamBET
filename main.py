@@ -4,6 +4,7 @@ import functions
 import connection
 import time
 
+
 def main():
     just_fix_windows_console()
     functions.logo()
@@ -11,8 +12,7 @@ def main():
     name = ""
     id = 0
     balance = 0
-
-
+    conn = connection.Conn()
 
     print(f""" Версия игры: {version}\n---""")
     #
@@ -30,22 +30,26 @@ def main():
 
     inp = int(input())
     if inp == 1:
-        print(f'''---
-{Fore.LIGHTGREEN_EX} Введите ваш никнейм (может содержать буквы, цифры и специальные символы, максимальная длина 20, аккаунты с непристойными никнеймами будут удалены){Fore.RESET}''')
-        nick = input()
-        print(f' {Fore.LIGHTBLUE_EX}Введите пароль (может содержать буквы, цифры и специальные символы, максимальная длина 20){Fore.RESET}')
-        psw = input()
-        print(f' {Fore.LIGHTYELLOW_EX}Успешная регистрация!{Fore.RESET}')
+        nick = input(f'---\n{Fore.LIGHTGREEN_EX} Введите ваш никнейм (аккаунт должен быть зарегистрирован в Gasprom Game){Fore.RESET}\n')
+        psw = input(f'{Fore.LIGHTBLUE_EX} Введите пароль{Fore.RESET}\n')
+        key = input(f'{Fore.LIGHTYELLOW_EX} Введите ваш ключ к игре{Fore.RESET}\n')
+
+        login_data = conn.register(nick, psw, key)
+        id = login_data[0]
+        name = login_data[1]
+        balance = login_data[2]
+
+        print(f'{Fore.LIGHTYELLOW_EX} Успешная регистрация!{Fore.RESET}')
         time.sleep(0.5)
 
     elif inp == 2:
         print('---')
-        print(
-            f' {Fore.LIGHTGREEN_EX}Введите ваш никнейм{Fore.RESET}')
-        nick = input()
-        print(f' {Fore.LIGHTBLUE_EX}Введите пароль{Fore.RESET}')
-        psw = input()
+
+        nick = input(f'{Fore.LIGHTGREEN_EX} Введите ваш никнейм{Fore.RESET}\n')
+        psw = input(f'{Fore.LIGHTBLUE_EX} Введите пароль{Fore.RESET}\n')
+
         time.sleep(1)
+
 
 try:
     main()
