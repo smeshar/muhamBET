@@ -1,6 +1,7 @@
 import pymysql
 import passwords
 
+
 class Conn():
     def connect(self):
         self.connection = pymysql.connect(host=passwords.hostname, port=passwords.port, database=passwords.database,
@@ -13,24 +14,20 @@ class Conn():
         self.cursor.close()
         self.connection.close()
 
-    def register(self, name: str, password: str, key: str):
+    def register(self, name: str, password: str, key: str) -> list:
         self.connect()
-
-        query = f"SELECT * FROM gamekeys"
-        self.cursor.execute(query)
+        self.cursor.execute(f"SELECT * FROM gamekeys")
 
         rows = self.cursor.fetchall()
         f = False
         for i in rows:
-            print(i)
             f |= (i[0] == key)
 
         if not f:
             print(" Несуществующий ключ к игре")
             return []
 
-        query = f"SELECT * FROM users WHERE name = '{name}'"
-        self.cursor.execute(query)
+        self.cursor.execute(f"SELECT * FROM users WHERE name = '{name}'")
 
         rows = self.cursor.fetchall()
 
@@ -43,11 +40,25 @@ class Conn():
             print(" Неверный пароль")
             return []
 
-        query = f"DELETE FROM gamekeys WHERE gamekey = '{key}'"
-        self.cursor.execute(query)
-
-        query = f"insert into users_muhambet values ({rows[0][0]})"
-        self.cursor.execute(query)
+        self.cursor.execute(f"DELETE FROM gamekeys WHERE gamekey = '{key}'")
+        self.cursor.execute(f"insert into users_muhambet values ({rows[0][0]})")
 
         self.close()
         return rows[0]
+
+    def login(self, name, password) -> list:
+        self.connect()
+        self.cursor.execute(f"SELECT id, password FROM users WHERE name = '{name}'")
+        rows = self.cursor.fetchone()
+
+        if password != rows[1]:
+            print(" Неверный пароль")
+            return []
+
+        self.cursor.execute(f"SELECT * FROM users_muhambet WHERE id = '{rows[0]}'")
+        rows = self.cursor.fetchone()
+        if rows is None:
+            print(" Пользователь не зарегистрирован")
+
+        self.cursor.execute(f"SELECT * FROM users WHERE name = '{name}'")
+        return self.cursor.fetchall()[0]

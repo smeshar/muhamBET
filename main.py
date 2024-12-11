@@ -34,20 +34,24 @@ def main():
         psw = input(f'{Fore.LIGHTBLUE_EX} Введите пароль{Fore.RESET}\n')
         key = input(f'{Fore.LIGHTYELLOW_EX} Введите ваш ключ к игре{Fore.RESET}\n')
 
-        login_data = conn.register(nick, psw, key)
-        id = login_data[0]
-        name = login_data[1]
-        balance = login_data[2]
+        register_data = conn.register(nick, psw, key)
+        id = register_data[0]
+        name = register_data[1]
+        balance = register_data[2]
 
         print(f'{Fore.LIGHTYELLOW_EX} Успешная регистрация!{Fore.RESET}')
         time.sleep(0.5)
 
     elif inp == 2:
-        print('---')
-
-        nick = input(f'{Fore.LIGHTGREEN_EX} Введите ваш никнейм{Fore.RESET}\n')
+        nick = input(f'---\n{Fore.LIGHTGREEN_EX} Введите ваш никнейм{Fore.RESET}\n')
         psw = input(f'{Fore.LIGHTBLUE_EX} Введите пароль{Fore.RESET}\n')
 
+        login_data = conn.login(nick, psw)
+        id = login_data[0]
+        name = login_data[1]
+        balance = login_data[2]
+
+        print(f'{Fore.LIGHTYELLOW_EX} Успешная авторизация!{Fore.RESET}')
         time.sleep(1)
 
 
