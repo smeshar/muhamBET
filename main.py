@@ -35,9 +35,9 @@ def main():
         key = input(f'{Fore.LIGHTYELLOW_EX} Введите ваш ключ к игре{Fore.RESET}\n')
 
         register_data = conn.register(nick, psw, key)
-        id = register_data[0]
+        id = int(register_data[0])
         name = register_data[1]
-        balance = register_data[2]
+        balance = float(register_data[2])
 
         print(f'{Fore.LIGHTYELLOW_EX} Успешная регистрация!{Fore.RESET}')
         time.sleep(0.5)
@@ -47,12 +47,56 @@ def main():
         psw = input(f'{Fore.LIGHTBLUE_EX} Введите пароль{Fore.RESET}\n')
 
         login_data = conn.login(nick, psw)
-        id = login_data[0]
+        id = int(login_data[0])
         name = login_data[1]
-        balance = login_data[2]
+        balance = float(login_data[3])
 
         print(f'{Fore.LIGHTYELLOW_EX} Успешная авторизация!{Fore.RESET}')
         time.sleep(1)
+
+    while True:
+        # EVERYDAY NEWS
+        print(f"--- \n"
+              f" Коэффициент на команду {functions.get_team()}: {Fore.LIGHTRED_EX}{123123}{Fore.RESET} \n"
+              f" Коэффициент на команду {functions.get_team()}: {Fore.LIGHTBLUE_EX}{634564356}{Fore.RESET} \n"
+              f"---\n"
+              f" Ваш баланс: {Fore.GREEN}{balance}{Fore.RESET}\n"
+              f" Осталось времени до закрытия ставок: {Fore.YELLOW}{2345325234}{Fore.RESET} с\n"
+              f"---\n"
+              f" Текущие ставки:")
+
+        # for transactions in all[4]: print(transactions)
+        #
+        # print(f"""---{Fore.CYAN} Топ игроков:{Fore.RESET}""")
+        # for top_players in all[5]: print(top_players)
+
+        print(f"---\n"
+              f" {Fore.LIGHTGREEN_EX}Сделать ставку 1{Fore.RESET}\n"
+              f" {Fore.LIGHTYELLOW_EX}Обновить ставки 2{Fore.RESET}\n"
+              f"---")
+
+        try:
+            query = int(input())
+        except:
+            print("Неверный ввод")
+            time.sleep(1)
+            clear = lambda: os.system('cls')
+            clear()
+            continue
+
+        # MAKE BET
+        if query == 1:
+            continue
+
+        # RELOAD
+        if query == 2:
+            clear = lambda: os.system('cls')
+            clear()
+            continue
+
+        time.sleep(1)
+        clear = lambda: os.system('cls')
+        clear()
 
 
 try:
