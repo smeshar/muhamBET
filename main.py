@@ -67,7 +67,7 @@ def main():
 
         # for transactions in all[4]: print(transactions)
         #
-        # print(f"""---{Fore.CYAN} Топ игроков:{Fore.RESET}""")
+        print(f"""---\n{Fore.CYAN} Топ игроков:{Fore.RESET}""")
         # for top_players in all[5]: print(top_players)
 
         print(f"---\n"
