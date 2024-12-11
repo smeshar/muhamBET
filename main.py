@@ -3,7 +3,7 @@ from colorama import Fore, just_fix_windows_console
 import functions
 import connection
 import time
-
+import os
 
 def main():
     just_fix_windows_console()
