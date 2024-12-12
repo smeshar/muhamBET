@@ -1,3 +1,4 @@
+import functions
 import pymysql
 import passwords
 
@@ -62,3 +63,21 @@ class Conn():
 
         self.cursor.execute(f"SELECT * FROM users WHERE name = '{name}'")
         return self.cursor.fetchall()[0]
+
+    def get_balance(self) -> float:
+        return 0.0
+
+    def get_teams(self) -> list:
+        return [functions.get_team(), functions.get_team()]
+
+    def get_coefs(self) -> list:
+        return [1, 2]
+
+    def get_time(self) -> int:
+        return 322
+
+    def top_players(self) -> list:
+        return ["simple"]
+
+    def get_all(self) -> list:
+        return [self.get_balance(), self.get_teams(), self.get_coefs(), self.get_time(), self.top_players()]

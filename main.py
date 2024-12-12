@@ -4,6 +4,7 @@ import functions
 import connection
 import time
 import os
+import sys
 
 def main():
     just_fix_windows_console()
@@ -55,20 +56,28 @@ def main():
         time.sleep(1)
 
     while True:
+        all = conn.get_all()
+
+        balance = all[0]
+        teams = all[1]
+        coefs = all[2]
+        cur_time = all[3]
+        top_players = all[4]
+
         # EVERYDAY NEWS
         print(f"--- \n"
-              f" Коэффициент на команду {functions.get_team()}: {Fore.LIGHTRED_EX}{123123}{Fore.RESET} \n"
-              f" Коэффициент на команду {functions.get_team()}: {Fore.LIGHTBLUE_EX}{634564356}{Fore.RESET} \n"
+              f" Коэффициент на команду {teams[0]}: {Fore.LIGHTRED_EX}{coefs[0]}{Fore.RESET} \n"
+              f" Коэффициент на команду {teams[1]}: {Fore.LIGHTBLUE_EX}{coefs[1]}{Fore.RESET} \n"
               f"---\n"
               f" Ваш баланс: {Fore.GREEN}{balance}{Fore.RESET}\n"
-              f" Осталось времени до закрытия ставок: {Fore.YELLOW}{2345325234}{Fore.RESET} с\n"
+              f" Осталось времени до закрытия ставок: {Fore.YELLOW}{cur_time}{Fore.RESET} с\n"
               f"---\n"
               f" Текущие ставки:")
 
         # for transactions in all[4]: print(transactions)
         #
         print(f"""---\n{Fore.CYAN} Топ игроков:{Fore.RESET}""")
-        # for top_players in all[5]: print(top_players)
+        for top_player in top_players: print(top_player)
 
         print(f"---\n"
               f" {Fore.LIGHTGREEN_EX}Сделать ставку 1{Fore.RESET}\n"
@@ -102,5 +111,6 @@ def main():
 try:
     main()
 except Exception as e:
-    print(f"Вы получили ошибку: {e}")
-    inp = input()
+    exc_type, exc_obj, exc_tb = sys.exc_info()
+    fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    print(e, exc_type, fname, exc_tb.tb_lineno)
